@@ -1,3 +1,4 @@
+var db = require('./db');
 var User = require('./user');
 
 function run() {
@@ -5,6 +6,8 @@ function run() {
     var nataly = new User('Nataly');
 
     michael.hello(nataly);
+
+    console.log(db.getPhrase('Run successful'));
 }
 
 
