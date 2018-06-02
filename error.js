@@ -1,4 +1,5 @@
 var util = require('util');
+var phrases = require('./db/ru.json');
 
 function PhraseError (message) {
     this.message = message;
@@ -21,7 +22,7 @@ HttpError.prototype.name = 'HttpError';
 
 function getPhrase(name) {
     if (!phrases[name]) {
-        throw new PhraseError("Phrase doesn't exists", + name);
+        throw new PhraseError("Phrase doesn't exists: " + name);
     }
     return phrases[name];
 }
@@ -30,7 +31,7 @@ function makePage(url) {
     if (url != 'index.html') {
         throw new HttpError(404, 'Page not found')
     }
-    return util.format("%s, %s!", getPhrase('*****'), getPhrase('world'));
+    return util.format("%s, %s!", getPhrase('Hello'), getPhrase('Mord'));
 }
 
 try {
