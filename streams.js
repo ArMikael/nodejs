@@ -14,3 +14,12 @@ stream.on('readable', function () {
 stream.on('end', function () {
    console.log('The End');
 });
+
+stream.on('error', function (err) {
+    if (err.code == 'ENOENT') {
+        console.log('File not found, kick your admin to upload it.');
+    } else {
+        console.error(err);
+    }
+
+});
