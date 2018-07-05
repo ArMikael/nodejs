@@ -9,11 +9,11 @@ app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');
 
 app.get('/', (req, res) => {
-   res.send('Welcome Home!');
+   res.render('home');
 });
 
 app.get('/user/:name', (req, res) => {
-    res.render(user);
+    res.render('layout', { name: req.params.name });
 });
 
 
