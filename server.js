@@ -1,9 +1,9 @@
-var db = require('./db');
-var User = require('./user');
+let db = require('./db');
+let User = require('./user');
 
 function run() {
-    var michael = new User('Michael');
-    var nataly = new User('Nataly');
+    let michael = new User('Michael');
+    let nataly = new User('Nataly');
 
     michael.hello(nataly);
 
