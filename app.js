@@ -13,7 +13,7 @@ app.get('/', (req, res) => {
 });
 
 app.get('/user/:name', (req, res) => {
-    res.render('layout', { name: req.params.name });
+    res.render('layout', { name: req.params.name, condition: false });
 });
 
 
