@@ -2,6 +2,7 @@
     Hello, {{ name }}
 </h1>
 
+<h2>Condition</h2>
 <section>
     {{# if condition }}
         <div>
@@ -12,4 +13,11 @@
             False section
         </div>
     {{/if}}
+</section>
+
+<h2>Array - For Each</h2>
+<section>
+    {{# each itemsList }}
+        <div>{{ this }}</div>
+    {{/each}}
 </section>
