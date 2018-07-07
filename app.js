@@ -13,7 +13,20 @@ app.get('/', (req, res) => {
 });
 
 app.get('/user/:name', (req, res) => {
-    res.render('layout', { name: req.params.name, condition: false, itemsList: ['Umbrella', 'Guitar', 'Mandolin'] });
+    let userData = {
+        name: 'David',
+        age: '33',
+        job: 'Developer'
+    };
+
+    res.render('layout',
+        {
+            name: req.params.name,
+            condition: false,
+            userData: userData,
+            itemsList: ['Umbrella', 'Guitar', 'Mandolin']
+        }
+    );
 });
 
 
