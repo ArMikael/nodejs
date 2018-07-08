@@ -38,6 +38,14 @@ app.get('/user/:name', (req, res) => {
     );
 });
 
+app.get('/about', (req, res) => {
+    res.render('about');
+});
+
+app.get('/contact', (req, res) => {
+    // http://localhost:3000/contact?name=Michael&email=armikael@gmail.com
+    res.render('contact-us', { data: req.query });
+});
 
 app.listen(3000);
 

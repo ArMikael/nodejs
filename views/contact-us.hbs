@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Contact us</title>
+
+    <style>
+        body {
+            font-family: Verdana;
+        }
+
+        fieldset {
+            display: block;
+            border: none;
+        }
+
+        input {
+            width: 300px;
+            height: 40px;
+            line-height: 40px;
+            padding-left: 10px;
+        }
+    </style>
+</head>
+<body>
+    {{> nav }}
+
+    <h1>Send us your details and we will contact you in 24 hours.</h1>
+
+    <form action="">
+        <fieldset>
+            <label for="name">Name</label>
+            <input type="text" id="name" value="{{ data.name }}">
+        </fieldset>
+
+        <fieldset>
+            <label for="email">Email</label>
+            <input type="text" id="email" value="{{ data.email }}">
+        </fieldset>
+
+        <input type="submit" value="send">
+    </form>
+</body>
+</html>
+
