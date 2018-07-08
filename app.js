@@ -14,8 +14,11 @@ app.engine('hbs',
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');
 
+app.use('/assets', express.static('assets'));
+
+
 app.get('/', (req, res) => {
-   res.render('home');
+   res.render('index');
 });
 
 app.get('/user/:name', (req, res) => {
