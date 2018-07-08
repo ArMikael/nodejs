@@ -3,7 +3,13 @@ const express = require('express');
 const app = express();
 const hbs = require('express-handlebars');
 
-app.engine('hbs', hbs({ extname: 'hbs', defaultValue: 'layout', layoutsDir: __dirname + '/views/' }));
+app.engine('hbs',
+    hbs({
+        extname: 'hbs',
+        defaultValue: 'layout',
+        layoutsDir: __dirname + '/views/',
+        partialsDir: __dirname + '/views/partials/'
+    }));
 
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');
