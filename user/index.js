@@ -1,5 +1,5 @@
 var db = require('../db');
-var log = require('../logger')(module);
+var log = require('../sandbox/logger')(module);
 
 db.connect();
 

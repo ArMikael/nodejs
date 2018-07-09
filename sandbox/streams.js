@@ -1,4 +1,4 @@
-var fs = require('fs');
+var fs = require('sandbox/fs');
 
 var stream = new fs.ReadStream('./db/ru.json');
 

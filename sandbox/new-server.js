@@ -1,5 +1,5 @@
 const http = require('http');
-const fs = require('fs');
+const fs = require('sandbox/fs');
 const url = require('url');
 const path = require('path');
 

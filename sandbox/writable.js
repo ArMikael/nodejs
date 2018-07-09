@@ -1,5 +1,5 @@
 var http = require('http');
-var fs = require('fs');
+var fs = require('sandbox/fs');
 
 new http.Server(function (req, res) {
     // res instance of http.ServerResponse < stream.Writable

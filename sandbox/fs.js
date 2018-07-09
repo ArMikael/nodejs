@@ -1,5 +1,5 @@
 // File System module
-var fs = require('fs');
+var fs = require('sandbox/fs');
 
 fs.exists('db/ru.json', function () {
     // Проверяет, существует ли такой путь. Но не умеет определить, это папка или файл.

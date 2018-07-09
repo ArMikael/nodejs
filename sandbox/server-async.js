@@ -1,5 +1,5 @@
 var http = require('http');
-var fs = require('fs');
+var fs = require('sandbox/fs');
 
 http.createServer(function(req, res) {
     if (req.url == '/') {

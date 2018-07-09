@@ -1,5 +1,5 @@
 var util = require('util');
-var phrases = require('./db/ru.json');
+var phrases = require('../db/ru.json');
 
 function PhraseError (message) {
     this.message = message;

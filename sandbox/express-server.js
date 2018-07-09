@@ -1,5 +1,5 @@
 var http = require('http');
-var fs = require('fs');
+var fs = require('sandbox/fs');
 var express = require('express');
 
 var app = express();

@@ -1,5 +1,5 @@
-let db = require('./db');
-let User = require('./user');
+let db = require('../db/index');
+let User = require('../user/index');
 
 function run() {
     let michael = new User('Michael');
