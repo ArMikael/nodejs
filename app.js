@@ -2,6 +2,7 @@ const path = require('path');
 const express = require('express');
 const hbs = require('express-handlebars');
 const bodyParser = require('body-parser');
+const todoCtrl = require('./controllers/todo.controller');
 const app = express();
 
 const urlencodedParser = bodyParser.urlencoded({ extended: false });
@@ -19,6 +20,11 @@ app.set('view engine', 'hbs');
 
 app.use('/assets', express.static('assets'));
 
+todoCtrl(app);
+
+// All request to static files will be forwarded to the "public" folder
+// app.use('/', express.static('./public'));
+
 
 app.get('/', (req, res) => {
    res.render('index');
@@ -28,7 +34,8 @@ app.get('/user/:name', (req, res) => {
     let userData = {
         name: 'David',
         age: '33',
-        job: 'Developer'
+        job: 'Developer',
+        hobbies: ['singing', 'playing board games', 'swimming']
     };
 
     res.render('profile',
