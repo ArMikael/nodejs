@@ -1,7 +1,10 @@
 const path = require('path');
 const express = require('express');
-const app = express();
 const hbs = require('express-handlebars');
+const bodyParser = require('body-parser');
+const app = express();
+
+const urlencodedParser = bodyParser.urlencoded({ extended: false });
 
 app.engine('hbs',
     hbs({
@@ -45,6 +48,12 @@ app.get('/about', (req, res) => {
 app.get('/contact', (req, res) => {
     // http://localhost:3000/contact?name=Michael&email=armikael@gmail.com
     res.render('contact-us', { data: req.query });
+});
+
+app.post('/contact', urlencodedParser, (req, res) => {
+    if (!req.body) return res.sendStatus(400);
+    console.log(req.body);
+    res.send('welcome, ' + req.body.name);
 });
 
 app.listen(3000);

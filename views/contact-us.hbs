@@ -30,15 +30,20 @@
 
     <h1>Send us your details and we will contact you in 24 hours.</h1>
 
-    <form action="">
+    <form id="contactForm" method="post" action="/contact">
         <fieldset>
             <label for="name">Name</label>
-            <input type="text" id="name" value="{{ data.name }}">
+            <input type="text" id="name" name="name" value="{{ data.name }}">
         </fieldset>
 
         <fieldset>
             <label for="email">Email</label>
-            <input type="text" id="email" value="{{ data.email }}">
+            <input type="text" id="email" name="email" value="{{ data.email }}">
+        </fieldset>
+
+        <fieldset>
+            <label for="email">Phone</label>
+            <input type="text" id="phone" name="phone" value="{{ data.phone }}">
         </fieldset>
 
         <input type="submit" value="send">
