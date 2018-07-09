@@ -1,5 +1,41 @@
+body {
+    background-color: #003366;
+}
+
+h1, h2, div, p, label {
+    font-family: Verdana;
+    color: white;
+}
+
 .main-title {
     padding: 12px;
-    background-color: papayawhip;
-    font-family: Arial;
+}
+
+
+fieldset {
+    display: block;
+    border: none;
+}
+
+label {
+    display: inline-block;
+    width: 100px;
+}
+
+input {
+    width: 300px;
+    height: 40px;
+    line-height: 40px;
+    padding-left: 10px;
+}
+
+input[type="submit"] {
+    width: 314px;
+    margin-left: 118px;
+}
+
+.success-message-container {
+    margin: 0 auto;
+    text-align: center;
+    padding-top: 100px;
 }

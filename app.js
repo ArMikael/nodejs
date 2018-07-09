@@ -31,7 +31,7 @@ app.get('/user/:name', (req, res) => {
         job: 'Developer'
     };
 
-    res.render('layout',
+    res.render('profile',
         {
             name: req.params.name,
             condition: false,
@@ -52,8 +52,7 @@ app.get('/contact', (req, res) => {
 
 app.post('/contact', urlencodedParser, (req, res) => {
     if (!req.body) return res.sendStatus(400);
-    console.log(req.body);
-    res.send('welcome, ' + req.body.name);
+    res.render('contact-success', { data: req.body });
 });
 
 app.listen(3000);
