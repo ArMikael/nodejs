@@ -9,12 +9,12 @@ const urlencodedParser = bodyParser.urlencoded({ extended: false });
 module.exports = (app) => {
 
     app.get('/todo', (req, res) => {
-        res.render('todo', {data: data});
+        res.render('todo', {todoList: data});
     });
 
     app.post('/todo', urlencodedParser, (req, res) => {
         data.push(req.body);
-        res.render('todo', {data: data});
+        res.render('todo', {todoList: data});
     });
 
     app.delete('/todo', (req, res) => {
