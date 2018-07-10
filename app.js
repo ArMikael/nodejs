@@ -2,6 +2,8 @@ const path = require('path');
 const express = require('express');
 const hbs = require('express-handlebars');
 const bodyParser = require('body-parser');
+const nodemailer = require('nodemailer');
+
 const app = express();
 
 const urlencodedParser = bodyParser.urlencoded({ extended: false });
