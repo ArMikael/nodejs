@@ -2,9 +2,14 @@ body {
     background-color: #003366;
 }
 
-h1, h2, div, p, label {
+h1, h2, div, p, label, ul, li {
     font-family: Verdana;
     color: white;
+}
+
+ul {
+    list-style: none;
+    padding: 0;
 }
 
 .main-title {
@@ -38,4 +43,22 @@ input[type="submit"] {
     margin: 0 auto;
     text-align: center;
     padding-top: 100px;
+}
+
+.add-item-btn {
+    height: 46px;
+    line-height: 42px;
+    cursor: pointer;
+}
+
+.todo-item {
+    height: 30px;
+    line-height: 30px;
+    padding: 10px 20px;
+}
+
+.todo-item:hover {
+    text-decoration: line-through;
+    background-color: rgba(0, 0, 0, 0.2);
+    cursor: pointer;
 }
