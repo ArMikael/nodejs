@@ -2,6 +2,7 @@ const path = require('path');
 const express = require('express');
 const hbs = require('express-handlebars');
 const bodyParser = require('body-parser');
+const mongoose = require('mongoose');
 const nodemailer = require('nodemailer');
 
 const todoCtrl = require('./controllers/todo.controller');
@@ -9,6 +10,15 @@ const todoCtrl = require('./controllers/todo.controller');
 const app = express();
 
 const urlencodedParser = bodyParser.urlencoded({ extended: false });
+
+// Connecting to the database
+mongoose.connect('mongodb://armikael:nanabanana12@ds211588.mlab.com:11588/tododb');
+
+// Creating Schema / Blueprint
+let todoSchema = new mongoose.Schema({
+    item: String
+});
+
 
 app.engine('hbs',
     hbs({
