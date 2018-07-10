@@ -17,7 +17,13 @@ module.exports = (app) => {
         res.render('todo', {todoList: data});
     });
 
-    app.delete('/todo', (req, res) => {
+    app.delete('/todo/:item', (req, res) => {
+        // let delItem = data.filter(req.body.item);
 
+        data = data.filter((todo) => {
+           return todo.item.replace(/ /g, '-') !== req.params.item;
+        });
+
+        res.json(data);
     });
 };

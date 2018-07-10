@@ -29,5 +29,20 @@
             {{/each}}
         </ul>
     </section>
+
+    <script>
+        $('.todo-item').on('click', function () {
+            let item = $(this).text().replace(/ /g, "-");
+            console.log('item', item);
+
+            $.ajax({
+                type: 'DELETE',
+                url: '/todo/' + item,
+                success: function (data) {
+                    location.reload();
+                }
+            });
+        });
+    </script>
 </body>
 </html>
