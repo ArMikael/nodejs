@@ -15,14 +15,6 @@ const todoSchema = new mongoose.Schema({
 // 2nd param: Schema as structure
 const Todo = mongoose.model('Todo', todoSchema);
 
-let itemOne = Todo({ item: 'Saving data into DB'}).save(err => {
-    if (err) {
-        throw err;
-    }
-
-    console.log('Item saved.');
-});
-
 
 module.exports = (app) => {
     app.get('/todo', (req, res) => {
@@ -40,7 +32,7 @@ module.exports = (app) => {
     });
 
     app.delete('/todo/:item', (req, res) => {
-        Todo.find({ item: req.params.item.replace(/\-/g, ' ') }).delete((err, data) => {
+        Todo.find({ item: req.params.item.replace(/\-/, ' ') }).remove((err, data) => {
             if (err) throw err;
             res.render('todo', { todoList: data });
         });

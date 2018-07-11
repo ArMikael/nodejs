@@ -18,8 +18,8 @@
     {{> nav }}
 
     <section class="todo-table" id="todoTable">
-        <form action="/todo" method="post">
-            <input type="text" name="item" placeholder="Add new item..." required>
+        <form id="todoForm">
+            <input id="item" type="text" name="item" placeholder="Add new item..." required>
             <button class="add-item-btn" type="submit">Add Item</button>
         </form>
         
@@ -31,8 +31,24 @@
     </section>
 
     <script>
+
+        $('#todoForm').on('submit', () => {
+            let item = $('#item');
+            let todo = { item: item.val() };
+
+            $.ajax({
+                type: 'POST',
+                url: '/todo/',
+                data: todo,
+                success: function (data) {
+                    location.reload();
+                }
+            });
+        });
+
+
         $('.todo-item').on('click', function () {
-            let item = $(this).text().replace(/ /g, "-");
+            let item = $(this).text();
             console.log('item', item);
 
             $.ajax({
