@@ -2,7 +2,6 @@ const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const urlencodedParser = bodyParser.urlencoded({ extended: false });
 
-
 // Connecting to the database
 mongoose.connect('mongodb://armikael:nanabanana12@ds211588.mlab.com:11588/tododb');
 
@@ -26,23 +25,24 @@ let itemOne = Todo({ item: 'Saving data into DB'}).save(err => {
 
 
 module.exports = (app) => {
-
     app.get('/todo', (req, res) => {
-        res.render('todo', {todoList: data});
+        Todo.find({}, (err, data) => {
+            if (err) throw err;
+            res.render('todo', {todoList: data});
+        });
     });
 
     app.post('/todo', urlencodedParser, (req, res) => {
-        data.push(req.body);
-        res.render('todo', {todoList: data});
+        Todo(req.body).save((err, data) => {
+            if (err) throw err;
+            res.render('todo', { todoList: data });
+        });
     });
 
     app.delete('/todo/:item', (req, res) => {
-        // let delItem = data.filter(req.body.item);
-
-        data = data.filter((todo) => {
-           return todo.item.replace(/ /g, '-') !== req.params.item;
+        Todo.find({ item: req.params.item.replace(/\-/g, ' ') }).delete((err, data) => {
+            if (err) throw err;
+            res.render('todo', { todoList: data });
         });
-
-        res.json(data);
     });
 };
