@@ -5,6 +5,7 @@ const bodyParser = require('body-parser');
 const nodemailer = require('nodemailer');
 
 const todoCtrl = require('./controllers/todo.controller');
+const contactsCtrl = require('./controllers/contacts.controller');
 
 const app = express();
 
@@ -24,6 +25,7 @@ app.set('view engine', 'hbs');
 app.use('/assets', express.static('assets'));
 
 todoCtrl(app);
+contactsCtrl(app);
 
 // All request to static files will be forwarded to the "public" folder
 // app.use('/', express.static('./public'));
@@ -55,15 +57,6 @@ app.get('/about', (req, res) => {
     res.render('about');
 });
 
-app.get('/contact', (req, res) => {
-    // http://localhost:3000/contact?name=Michael&email=armikael@gmail.com
-    res.render('contact-us', { data: req.query });
-});
-
-app.post('/contact', urlencodedParser, (req, res) => {
-    if (!req.body) return res.sendStatus(400);
-    res.render('contact-success', { data: req.body });
-});
 
 app.listen(3000);
 
