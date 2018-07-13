@@ -11,10 +11,20 @@ const ContactSchema = new mongoose.Schema({
 
 const Contact = mongoose.model('Contact', ContactSchema);
 
+Contact({ name: 'Michael Treser', email: 'michael@gmail.com' }).save();
+
+Contact({ name: 'David Coperfield', email: 'david@gmail.com' }).save();
+
 module.exports = (app) => {
     app.get('/contact', (req, res) => {
         // http://localhost:3000/contact?name=Michael&email=armikael@gmail.com
         res.render('contact-us', { data: req.query });
+    });
+
+    app.get('/contacts', (req, res) => {
+        Contact.find({}, data => {
+            res.render('contacts', { contactsList: data });
+        });
     });
 
     app.post('/contact', urlencodedParser, (req, res) => {
