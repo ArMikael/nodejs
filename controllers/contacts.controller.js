@@ -6,14 +6,11 @@ mongoose.connect('mongodb://armikael:nanabanana12@ds211588.mlab.com:11588/tododb
 
 const ContactSchema = new mongoose.Schema({
     name: String,
-    email: String
+    email: String,
+    phone: Number
 });
 
 const Contact = mongoose.model('Contact', ContactSchema);
-
-Contact({ name: 'Michael Treser', email: 'michael@gmail.com' }).save();
-
-Contact({ name: 'David Coperfield', email: 'david@gmail.com' }).save();
 
 module.exports = (app) => {
     app.get('/contact', (req, res) => {
@@ -22,13 +19,16 @@ module.exports = (app) => {
     });
 
     app.get('/contacts', (req, res) => {
-        Contact.find({}, data => {
+        Contact.find({}, (err, data) => {
+            if (err) throw err;
             res.render('contacts', { contactsList: data });
         });
     });
 
     app.post('/contact', urlencodedParser, (req, res) => {
-        if (!req.body) return res.sendStatus(400);
-        res.render('contact-success', { data: req.body });
+        Contact(req.body).save((err, data) => {
+            if (!data) return res.sendStatus(400);
+            res.render('contact-success', { data: data });
+        });
     });
 };
