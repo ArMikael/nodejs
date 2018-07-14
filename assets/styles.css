@@ -62,3 +62,13 @@ input[type="submit"] {
     background-color: rgba(0, 0, 0, 0.2);
     cursor: pointer;
 }
+
+.contact {
+    display: flex;
+}
+
+.update-contact-btn {
+    width: 300px;
+    height: 46px;
+    line-height: 46px;
+}

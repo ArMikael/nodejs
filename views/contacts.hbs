@@ -1,15 +1,35 @@
-<ul class="contacts-list">
-    {{#each contactsList }}
-        <li class="contact">
-            <div class="name">
-                {{ this.name }}
-            </div>
-            <div class="email">
-                {{ this.email }}
-            </div>
-            <div class="phone">
-                {{ this.phone }}
-            </div>
-        </li>
-    {{/each}}
-</ul>
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Contacts</title>
+
+    <script src="https://code.jquery.com/jquery-2.2.4.min.js" crossorigin="anonymous"></script>
+
+    <link rel="stylesheet" href="/assets/styles.css">
+
+</head>
+<body>
+    <ul class="contacts-list">
+        {{#each contactsList }}
+            <li class="contact" id="contact{{ this.id }}">
+                <input type="text" value="{{ this.name }}">
+                <input type="email" value="{{ this.email }}">
+                <input type="text" value="{{ this.phone }}">
+                <button type="button" class="update-contact-btn">Save</button>
+            </li>
+        {{/each}}
+    </ul>
+
+    <script>
+        $('.update-contact-btn').on('click', event => {
+            let contact = $(event.target).closest('.contact')[0].id;
+           console.log(contact);
+        });
+
+    </script>
+</body>
+</html>
