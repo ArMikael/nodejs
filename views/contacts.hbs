@@ -15,10 +15,10 @@
 <body>
     <ul class="contacts-list">
         {{#each contactsList }}
-            <li class="contact" id="contact{{ this.id }}">
-                <input type="text" value="{{ this.name }}">
-                <input type="email" value="{{ this.email }}">
-                <input type="text" value="{{ this.phone }}">
+            <li class="contact" id="{{ this.id }}">
+                <input class="contact-name" type="text" value="{{ this.name }}">
+                <input class="contact-email" type="email" value="{{ this.email }}">
+                <input class="contact-phone" type="text" value="{{ this.phone }}">
                 <button type="button" class="update-contact-btn">Save</button>
             </li>
         {{/each}}
@@ -26,10 +26,30 @@
 
     <script>
         $('.update-contact-btn').on('click', event => {
-            let contact = $(event.target).closest('.contact')[0].id;
-           console.log(contact);
-        });
+            let contact = $(event.target).closest('.contact')[0];
+//            let contactId = contact.id;
+//            let contactName = contact.find('.contact-name').val();
+//            let contactEmail = contact.find('.contact-email').val();
+//            let contactPhone = contact.find('.contact-phone').val();
 
+            let contactObj = {
+                id: contact.id,
+                name: $(contact).find('.contact-name').val(),
+                email: $(contact).find('.contact-email').val(),
+                phone: $(contact).find('.contact-phone').val()
+            };
+
+            $.ajax({
+                type: 'POST',
+                url: '/contacts/' + contactObj.id,
+                data: contactObj,
+                success: () => {
+                    location.reload();
+                }
+            });
+
+            console.log(contact);
+        });
     </script>
 </body>
 </html>
