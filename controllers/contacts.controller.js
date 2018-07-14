@@ -18,6 +18,15 @@ module.exports = (app) => {
         res.render('contact-us', { data: req.query });
     });
 
+    app.post('/contact', urlencodedParser, (req, res) => {
+        Contact(req.body).save((err, data) => {
+            if (!data) return res.sendStatus(400);
+            res.render('contact-success', { data: data });
+        });
+    });
+
+
+
     app.get('/contacts', (req, res) => {
         Contact.find({}, (err, data) => {
             if (err) throw err;
@@ -25,10 +34,10 @@ module.exports = (app) => {
         });
     });
 
-    app.post('/contact', urlencodedParser, (req, res) => {
-        Contact(req.body).save((err, data) => {
-            if (!data) return res.sendStatus(400);
-            res.render('contact-success', { data: data });
+    app.post('/contacts/:contact', urlencodedParser, (req, res) => {
+        Contact.findOneAndUpdate({ _id: req.body.id }, req.body, (err, data) => {
+            if (err) throw err;
+            return res.send('Successfully saved');
         });
     });
 };
