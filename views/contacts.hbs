@@ -19,6 +19,7 @@
                 <input class="contact-name" type="text" value="{{ this.name }}">
                 <input class="contact-email" type="email" value="{{ this.email }}">
                 <input class="contact-phone" type="text" value="{{ this.phone }}">
+                <button type="button" class="delete-contact-btn">Del</button>
                 <button type="button" class="update-contact-btn">Save</button>
             </li>
         {{/each}}
@@ -39,6 +40,18 @@
                 type: 'POST',
                 url: '/contacts/' + contactObj.name.replace(/\s/g, ''),
                 data: contactObj,
+                success: () => {
+                    location.reload();
+                }
+            });
+        });
+
+        $('.delete-contact-btn').on('click', event => {
+            let contactId = $(event.target).closest('.contact')[0].id;
+
+            $.ajax({
+                type: 'DELETE',
+                url: '/contacts/' + contactId,
                 success: () => {
                     location.reload();
                 }

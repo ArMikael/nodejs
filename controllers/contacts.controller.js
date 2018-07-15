@@ -40,4 +40,11 @@ module.exports = (app) => {
             return res.send('Successfully saved');
         });
     });
+
+    app.delete('/contacts/:contactId', (req, res) => {
+        Contact.find({ _id: req.params.contactId }).remove((err, data) => {
+            if (err) throw err;
+            res.render('contacts', { contactsList: data });
+        });
+    });
 };
