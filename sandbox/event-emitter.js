@@ -1,4 +1,4 @@
-const EventEmitter = require('events').EventEmitter;
+const EventEmitter = require('events');
 
 let server = new EventEmitter();
 
@@ -7,7 +7,7 @@ server.on('request', function (request) {
 });
 
 server.on('request', function (request) {
-   console.log(request);
+    console.log(request);
 });
 
 server.on('logging', (arg) => {
@@ -16,5 +16,4 @@ server.on('logging', (arg) => {
 
 server.emit('request', {from: 'Client'});
 server.emit('request', {from: 'Another client'});
-
 server.emit('logging', {data: 'message' });
