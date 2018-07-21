@@ -60,6 +60,8 @@ app.get('/about', (req, res) => {
 const port = process.env.PORT || 3000;
 app.listen(port, () => console.log(`Listening to the port: ${ port }...`));
 
+// export PORT=xxx // set process.env.PORT variable on Mac
+
 // let server = require('./server');
 //
 // server.run(); // Вызов метод дочернего модуля.
