@@ -22,7 +22,7 @@ app.get('/courses/', (req, res) => {
 
 app.get('/courses/:id', (req, res) => {
     const course = courses.find(crs => crs.id === parseInt(req.params.id));
-    if (!course) res.status(404).send('The course with the given ID was not found.');
+    if (!course) return res.status(404).send('The course with the given ID was not found.');
 
     res.status(200).send(course);
 });
@@ -30,12 +30,9 @@ app.get('/courses/:id', (req, res) => {
 app.post('/courses/', (req, res) => {
     const result = validateCourse(req.body);
 
-    if (result.error) {
-        // Bad request 400
-        res.status(400).send(result.error.details[0].message);
-        return;
-    }
-
+    // Bad request 400
+    if (result.error) return res.status(400).send(result.error.details[0].message);
+    
     const course = {
         id: courses.length + 1,
         name: req.body.name
@@ -47,15 +44,24 @@ app.post('/courses/', (req, res) => {
 
 app.put('/courses/:id', (req, res) => {
     let course = courses.find(crs => crs.id === parseInt(req.params.id));
-    if (!course) res.status(404).send('The course with the given name was not found.');
+    if (!course) return res.status(404).send('The course with the given name was not found.');
 
     const { error } = validateCourse(req.body);
     if (error) {
-        res.status(400).send(error.details[0].message);
-        return false;
+        return res.status(400).send(error.details[0].message);
     }
 
     course.name = req.body.name;
+
+    res.send(course);
+});
+
+app.delete('/courses/:id', (req, res) => {
+    const course = courses.find(crs => crs.id === parseInt(req.params.id));
+    if (!course) return res.status(404).send('Course with the given id was not found.');
+
+    const index = courses.indexOf(course);
+    courses.splice(index, 1);
 
     res.send(course);
 });
