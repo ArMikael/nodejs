@@ -28,11 +28,7 @@ app.get('/courses/:id', (req, res) => {
 });
 
 app.post('/courses/', (req, res) => {
-    const schema = {
-      name: Joi.string().min(3).required()
-    };
-
-    const result = Joi.validate(req.body, schema);
+    const result = validateCourse(req.body);
 
     if (result.error) {
         // Bad request 400
@@ -49,5 +45,29 @@ app.post('/courses/', (req, res) => {
     res.send(course);
 });
 
+app.put('/courses/:id', (req, res) => {
+    let course = courses.find(crs => crs.id === parseInt(req.params.id));
+    if (!course) res.status(404).send('The course with the given name was not found.');
+
+    const { error } = validateCourse(req.body);
+    if (error) {
+        res.status(400).send(error.details[0].message);
+        return false;
+    }
+
+    course.name = req.body.name;
+
+    res.send(course);
+});
+
 const port = process.env.PORT || 3200;
 app.listen(port);
+
+function validateCourse(course) {
+    const schema = {
+        id: Joi.number(),
+        name: Joi.string().min(3).required()
+    };
+
+    return Joi.validate(course, schema);
+};
