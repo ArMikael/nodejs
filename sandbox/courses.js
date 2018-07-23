@@ -1,3 +1,4 @@
+const config = require('config');
 const express = require('express');
 const helmet = require('helmet'); // Sets headers to HTTP request to secure the app
 const morgan = require('morgan'); // HTTP request logger. For DEV only.
@@ -7,6 +8,9 @@ const app = express();
 app.use(express.json());
 app.use(express.static('public'));
 app.use(helmet());
+
+console.log('App Name: ', config.get('name'));
+console.log('Mail Server: ', config.get('mail.host'));
 
 if (app.get('env') === 'development') {
    app.use(morgan('tiny'));
