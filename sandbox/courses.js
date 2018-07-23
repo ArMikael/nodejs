@@ -3,6 +3,7 @@ const Joi = require('joi');
 
 const app = express();
 app.use(express.json());
+app.use(express.static('public'));
 
 const courses = [
     {
@@ -15,6 +16,10 @@ const courses = [
         id: 3, name: 'mongoDB Beginners Guide'
     }
 ];
+
+app.get('/', (req, res) => {
+   res.status(200).send('Welcome to the Courses Machine!');
+});
 
 app.get('/courses/', (req, res) => {
     res.status(200).send(courses);
@@ -32,7 +37,7 @@ app.post('/courses/', (req, res) => {
 
     // Bad request 400
     if (result.error) return res.status(400).send(result.error.details[0].message);
-    
+
     const course = {
         id: courses.length + 1,
         name: req.body.name
@@ -66,7 +71,7 @@ app.delete('/courses/:id', (req, res) => {
     res.send(course);
 });
 
-const port = process.env.PORT || 3200;
+const port = process.env.PORT || 3300;
 app.listen(port);
 
 function validateCourse(course) {
