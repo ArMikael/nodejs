@@ -3,21 +3,24 @@ const express = require('express');
 const helmet = require('helmet'); // Sets headers to HTTP request to secure the app
 const morgan = require('morgan'); // HTTP request logger. For DEV only.
 const Joi = require('joi');
+const debug = require('debug')('app:courses'); // Set in terminal "export DEBUG=app:courses,app:config"
+const configDebug = require('debug')('app:config'); // Run all debuggers -> export DEBUG:app:*
+
+debug('All dependencies loaded!');
 
 const app = express();
 app.use(express.json());
 app.use(express.static('public'));
 app.use(helmet());
 
-console.log('App Name: ', config.get('name'));
-console.log('Mail Server: ', config.get('mail.host'));
-console.log('Mail Password: ', config.get('mail.password'));
+configDebug('App Name: ', config.get('name'));
+configDebug('Mail Server: ', config.get('mail.host'));
+configDebug('Mail Password: ', config.get('mail.password'));
 
 if (app.get('env') === 'development') {
    app.use(morgan('tiny'));
-   console.log('Morgan enabled...');
+   debug('Morgan enabled...');
 }
-
 
 const courses = [
     {
