@@ -1,9 +1,13 @@
 const express = require('express');
+const helmet = require('helmet'); // Sets headers to HTTP request to secure the app
+const morgan = require('morgan'); // HTTP request logger. For DEV only.
 const Joi = require('joi');
 
 const app = express();
 app.use(express.json());
 app.use(express.static('public'));
+app.use(helmet());
+app.use(morgan('tiny'));
 
 const courses = [
     {
