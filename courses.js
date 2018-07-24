@@ -5,17 +5,22 @@ const morgan = require('morgan'); // HTTP request logger. For DEV only.
 const Joi = require('joi');
 const debug = require('debug')('app:courses'); // Set in terminal "export DEBUG=app:courses,app:config"
 const configDebug = require('debug')('app:config'); // Run all debuggers -> export DEBUG:app:*
+// const pug = require('pug');
 
 debug('All dependencies loaded!');
 
 const app = express();
+
+app.set('view engine', 'pug');
+app.set('views', './views/pug'); // default views folder
+
 app.use(express.json());
 app.use(express.static('public'));
 app.use(helmet());
 
 configDebug('App Name: ', config.get('name'));
 configDebug('Mail Server: ', config.get('mail.host'));
-configDebug('Mail Password: ', config.get('mail.password'));
+configDebug('Mail Password: ', config.get('mail.password')); //
 
 if (app.get('env') === 'development') {
    app.use(morgan('tiny'));
@@ -35,7 +40,8 @@ const courses = [
 ];
 
 app.get('/', (req, res) => {
-   res.status(200).send('Welcome to the Courses Machine!');
+   // res.status(200).send('Welcome to the Courses Machine!');
+   res.status(200).render('index', { title: 'Course Machine App', mainTitle: 'Course Machine' });
 });
 
 app.get('/courses/', (req, res) => {
