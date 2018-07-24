@@ -1,31 +1,6 @@
-const config = require('config');
 const express = require('express');
-const helmet = require('helmet'); // Sets headers to HTTP request to secure the app
-const morgan = require('morgan'); // HTTP request logger. For DEV only.
 const Joi = require('joi');
-const debug = require('debug')('app:courses'); // Set in terminal "export DEBUG=app:courses,app:config"
-const configDebug = require('debug')('app:config'); // Run all debuggers -> export DEBUG:app:*
-// const pug = require('pug');
-
-debug('All dependencies loaded!');
-
-const app = express();
-
-app.set('view engine', 'pug');
-app.set('views', './views/pug'); // default views folder
-
-app.use(express.json());
-app.use(express.static('public'));
-app.use(helmet());
-
-configDebug('App Name: ', config.get('name'));
-configDebug('Mail Server: ', config.get('mail.host'));
-configDebug('Mail Password: ', config.get('mail.password')); //
-
-if (app.get('env') === 'development') {
-   app.use(morgan('tiny'));
-   debug('Morgan enabled...');
-}
+const router = express.Router();
 
 const courses = [
     {
@@ -39,23 +14,19 @@ const courses = [
     }
 ];
 
-app.get('/', (req, res) => {
-   // res.status(200).send('Welcome to the Courses Machine!');
-   res.status(200).render('index', { title: 'Course Machine App', mainTitle: 'Course Machine' });
-});
 
-app.get('/courses/', (req, res) => {
+router.get('/', (req, res) => {
     res.status(200).send(courses);
 });
 
-app.get('/courses/:id', (req, res) => {
+router.get('/:id', (req, res) => {
     const course = courses.find(crs => crs.id === parseInt(req.params.id));
     if (!course) return res.status(404).send('The course with the given ID was not found.');
 
     res.status(200).send(course);
 });
 
-app.post('/courses/', (req, res) => {
+router.post('/', (req, res) => {
     const result = validateCourse(req.body);
 
     // Bad request 400
@@ -70,7 +41,7 @@ app.post('/courses/', (req, res) => {
     res.send(course);
 });
 
-app.put('/courses/:id', (req, res) => {
+router.put('/:id', (req, res) => {
     let course = courses.find(crs => crs.id === parseInt(req.params.id));
     if (!course) return res.status(404).send('The course with the given name was not found.');
 
@@ -84,7 +55,7 @@ app.put('/courses/:id', (req, res) => {
     res.send(course);
 });
 
-app.delete('/courses/:id', (req, res) => {
+router.delete('/:id', (req, res) => {
     const course = courses.find(crs => crs.id === parseInt(req.params.id));
     if (!course) return res.status(404).send('Course with the given id was not found.');
 
@@ -94,8 +65,7 @@ app.delete('/courses/:id', (req, res) => {
     res.send(course);
 });
 
-const port = process.env.PORT || 3300;
-app.listen(port);
+
 
 function validateCourse(course) {
     const schema = {
@@ -105,3 +75,5 @@ function validateCourse(course) {
 
     return Joi.validate(course, schema);
 };
+
+module.exports = router;
