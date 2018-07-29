@@ -6,7 +6,7 @@ const debug = require('debug')('app:courses'); // Set in terminal "export DEBUG=
 const configDebug = require('debug')('app:config'); // Run all debuggers -> export DEBUG:app:*
 const mongoose = require('mongoose');
 
-mongoose.connect('mongodb://armikael:nanabanana12@ds211588.mlab.com:11588/courses')
+mongoose.connect('mongodb://armikael:nanabanana12@ds159121.mlab.com:59121/courses', { useNewUrlParser: true })
     .then(() => console.log('Connected to MongoDB.'))
     .catch((err) => console.log('Could not connect to MongoDB.'));
 
@@ -27,7 +27,7 @@ app.use('/courses', courses);
 
 configDebug('App Name: ', config.get('name'));
 configDebug('Mail Server: ', config.get('mail.host'));
-configDebug('Mail Password: ', config.get('mail.password')); //
+//configDebug('Mail Password: ', config.get('mail.password')); //
 
 if (app.get('env') === 'development') {
     app.use(morgan('tiny'));
@@ -38,6 +38,32 @@ app.get('/', (req, res) => {
     // res.status(200).render('index', { title: 'Course Machine App', mainTitle: 'Course Machine' });
     res.status(200).send('Welcome to the Courses Machine!');
 });
+
+const courseSchema = mongoose.Schema({
+    name: String,
+    author: String,
+    tags: [ String ],
+    date: { type: Date, default: Date.now },
+    isPublished: Boolean
+});
+
+const Course = mongoose.model('Course', courseSchema);
+
+async function createCourse() {
+    const course = new Course({
+        name: 'Angular for Back Enders',
+        author: 'Michael Treser',
+        tags: ['Angular', 'Front End'],
+        isPublished: true
+    });
+
+    const result = await course.save();
+    console.log(result);
+}
+
+createCourse();
+
+
 
 
 const port = process.env.PORT || 3300;
