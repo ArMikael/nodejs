@@ -4,6 +4,12 @@ const helmet = require('helmet'); // Sets headers to HTTP request to secure the 
 const morgan = require('morgan'); // HTTP request logger. For DEV only.
 const debug = require('debug')('app:courses'); // Set in terminal "export DEBUG=app:courses,app:config"
 const configDebug = require('debug')('app:config'); // Run all debuggers -> export DEBUG:app:*
+const mongoose = require('mongoose');
+
+mongoose.connect('mongodb://armikael:nanabanana12@ds211588.mlab.com:11588/courses')
+    .then(() => console.log('Connected to MongoDB.'))
+    .catch((err) => console.log('Could not connect to MongoDB.'));
+
 
 const courses = require('./courses');
 
