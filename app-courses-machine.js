@@ -61,7 +61,19 @@ async function createCourse() {
     console.log(result);
 }
 
-createCourse();
+// createCourse();
+
+async function getCourses() {
+    const courses = await Course
+        .find()
+        .sort({ name: -1 })
+        .limit(3)
+        .select({ name: 1, author: 1, date: 1 });
+
+    console.log(courses);
+}
+
+getCourses();
 
 
 
