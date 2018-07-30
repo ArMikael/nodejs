@@ -65,10 +65,11 @@ async function createCourse() {
 
 async function getCourses() {
     const courses = await Course
-        .find()
-        .sort({ name: -1 })
-        .limit(3)
-        .select({ name: 1, author: 1, date: 1 });
+        .find({ isPublished: true })
+        .or([{ tags: 'backend'}, { tags: 'frontend'}])
+        .sort('-price')
+        .limit(10)
+        .select({ name: 1, author: 1, price: 1, tags: 1 });
 
     console.log(courses);
 }
@@ -80,3 +81,4 @@ getCourses();
 
 const port = process.env.PORT || 3300;
 app.listen(port);
+
