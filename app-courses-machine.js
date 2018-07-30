@@ -65,7 +65,7 @@ async function createCourse() {
 
 async function getCourses() {
     const courses = await Course
-        .find({ isPublished: true })
+        .find({ isPublished: true, price: { $gte: 15 }})
         .or([{ tags: 'backend'}, { tags: 'frontend'}])
         .sort('-price')
         .limit(10)
