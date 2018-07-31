@@ -53,7 +53,15 @@ const courseSchema = mongoose.Schema({
         type: [ String ],
         enum: ['Front End', 'Back End', 'DB']
     },
-    tags: [ String ],
+    tags: {
+        type: Array,
+        validate: {
+            validator: function (value) {
+                return value && value.length > 0
+            },
+            message: 'A course should have at least one tag.'
+        }
+    },
     date: { type: Date, default: Date.now },
     isPublished: Boolean,
     price: {
@@ -67,17 +75,23 @@ const Course = mongoose.model('Course', courseSchema);
 
 async function createCourse() {
     const course = new Course({
-        name: 'Angular for Back Enders',
+        name: 'NodeJS for Dummies',
         author: 'Michael Treser',
-        tags: ['Angular', 'JS'],
+        // tags: ['NodeJS', 'JS'],
         isPublished: true
     });
 
-    const result = await course.save();
-    console.log(result);
+    try {
+        const result = await course.save();
+        console.log(result);
+    }
+    catch (err) {
+        console.log(err.message);
+    }
+
 }
 
-// createCourse();
+createCourse();
 
 async function getCourses() {
     const courses = await Course
@@ -90,7 +104,7 @@ async function getCourses() {
     console.log(courses);
 }
 
-getCourses();
+// getCourses();
 
 
 
