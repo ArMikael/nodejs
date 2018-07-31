@@ -14,11 +14,12 @@ const courses = [
     }
 ];
 
-
+// Get all courses
 router.get('/', (req, res) => {
     res.status(200).send(courses);
 });
 
+// Get specific course
 router.get('/:id', (req, res) => {
     const course = courses.find(crs => crs.id === parseInt(req.params.id));
     if (!course) return res.status(404).send('The course with the given ID was not found.');
@@ -26,6 +27,7 @@ router.get('/:id', (req, res) => {
     res.status(200).send(course);
 });
 
+// Adding new course
 router.post('/', (req, res) => {
     const result = validateCourse(req.body);
 
@@ -41,6 +43,8 @@ router.post('/', (req, res) => {
     res.send(course);
 });
 
+
+// Updating an existing course
 router.put('/:id', (req, res) => {
     let course = courses.find(crs => crs.id === parseInt(req.params.id));
     if (!course) return res.status(404).send('The course with the given name was not found.');
@@ -55,6 +59,7 @@ router.put('/:id', (req, res) => {
     res.send(course);
 });
 
+// Remove course
 router.delete('/:id', (req, res) => {
     const course = courses.find(crs => crs.id === parseInt(req.params.id));
     if (!course) return res.status(404).send('Course with the given id was not found.');
@@ -66,7 +71,7 @@ router.delete('/:id', (req, res) => {
 });
 
 
-
+// Validation by using Joi before sending it to db
 function validateCourse(course) {
     const schema = {
         id: Joi.number(),
@@ -74,6 +79,6 @@ function validateCourse(course) {
     };
 
     return Joi.validate(course, schema);
-};
+}
 
 module.exports = router;

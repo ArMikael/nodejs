@@ -40,11 +40,27 @@ app.get('/', (req, res) => {
 });
 
 const courseSchema = mongoose.Schema({
-    name: String,
+    name: {
+        type: String,
+        // All following are mongoose validators and doesn't exist in vanilla mongoDB
+        required: true,
+        minlength: 5,
+        maxlength: 255,
+        // match: /pattern/
+    },
     author: String,
+    categories: {
+        type: [ String ],
+        enum: ['Front End', 'Back End', 'DB']
+    },
     tags: [ String ],
     date: { type: Date, default: Date.now },
-    isPublished: Boolean
+    isPublished: Boolean,
+    price: {
+        type: Number,
+        min: 10,
+        max: 2000
+    }
 });
 
 const Course = mongoose.model('Course', courseSchema);
@@ -53,7 +69,7 @@ async function createCourse() {
     const course = new Course({
         name: 'Angular for Back Enders',
         author: 'Michael Treser',
-        tags: ['Angular', 'Front End'],
+        tags: ['Angular', 'JS'],
         isPublished: true
     });
 
