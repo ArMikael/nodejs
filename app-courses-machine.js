@@ -51,7 +51,10 @@ const courseSchema = mongoose.Schema({
     author: String,
     categories: {
         type: [ String ],
-        enum: ['Front End', 'Back End', 'DB']
+        enum: ['Front End', 'Back End', 'DB'],
+        lowercase: true, // save all categories in lowercase
+        trim: true // remove all empty spaces in categories strings
+        // uppercase: true // save all categories in uppercase
     },
     tags: {
         type: Array,
@@ -69,8 +72,11 @@ const courseSchema = mongoose.Schema({
     },
     price: {
         type: Number,
+        required: true,
         min: 10,
-        max: 2000
+        max: 2000,
+        get: (v) => Math.round(v), // Round the value when it's coming from DB
+        set: (v) => Math.round(v) // Round the value when we saving it on backend
     }
 });
 
@@ -78,9 +84,10 @@ const Course = mongoose.model('Course', courseSchema);
 
 async function createCourse() {
     const course = new Course({
-        // name: 'NodeJS for Dummies',
+        name: 'NodeJS for Dummies',
         author: 'Michael Treser',
-        // tags: ['NodeJS', 'JS'],
+        tags: ['NodeJS', 'JS'],
+        price: 14.789,
         isPublished: true
     });
 
