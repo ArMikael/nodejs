@@ -63,7 +63,10 @@ const courseSchema = mongoose.Schema({
         }
     },
     date: { type: Date, default: Date.now },
-    isPublished: Boolean,
+    isPublished: {
+        type: Boolean,
+        required: true
+    },
     price: {
         type: Number,
         min: 10,
@@ -75,7 +78,7 @@ const Course = mongoose.model('Course', courseSchema);
 
 async function createCourse() {
     const course = new Course({
-        name: 'NodeJS for Dummies',
+        // name: 'NodeJS for Dummies',
         author: 'Michael Treser',
         // tags: ['NodeJS', 'JS'],
         isPublished: true
@@ -86,7 +89,13 @@ async function createCourse() {
         console.log(result);
     }
     catch (err) {
-        console.log(err.message);
+        // Simple Error notification
+        // console.log(err.message);
+
+        // Advance Error notification
+        for (field in err.errors) {
+            console.log(err.errors[field].message);
+        }
     }
 
 }
