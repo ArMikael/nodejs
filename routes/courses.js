@@ -17,13 +17,9 @@ const courses = [
 ];
 
 // Get all courses
-router.get('/', (req, res) => {
-    async function getAllCourses() {
-        const courses = await Course.find({});
-        res.status(200).send(courses);
-    }
-
-    getAllCourses();
+router.get('/', async (req, res) => {
+    const courses = await Course.find({});
+    res.status(200).send(courses);
 });
 
 // Get specific course
