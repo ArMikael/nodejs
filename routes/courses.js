@@ -4,18 +4,6 @@ const router = express.Router();
 const { Course } = require('../models/course.model');
 
 
-const courses = [
-    {
-        id: 1, name: 'Angular 6 Complete Guide'
-    },
-    {
-        id: 2, name: 'NodeJS Complete Guide'
-    },
-    {
-        id: 3, name: 'mongoDB Beginners Guide'
-    }
-];
-
 // Get all courses
 router.get('/', async (req, res) => {
     const courses = await Course.find({});
@@ -23,10 +11,10 @@ router.get('/', async (req, res) => {
 });
 
 // Get specific course
-router.get('/:id', (req, res) => {
-    const course = courses.find(crs => crs.id === parseInt(req.params.id));
-    if (!course) return res.status(404).send('The course with the given ID was not found.');
+router.get('/:id', async (req, res) => {
+    const course = await Course.find({ _id: req.params.id });
 
+    if (!course) return res.status(404).send('The course with the given ID was not found.');
     res.status(200).send(course);
 });
 
