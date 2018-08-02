@@ -1,4 +1,5 @@
 const config = require('config');
+const { privateConfig } = require('./config/private-config');
 const express = require('express');
 const helmet = require('helmet'); // Sets headers to HTTP request to secure the app
 const morgan = require('morgan'); // HTTP request logger. For DEV only.
@@ -6,7 +7,7 @@ const debug = require('debug')('app:courses'); // Set in terminal "export DEBUG=
 const configDebug = require('debug')('app:config'); // Run all debuggers -> export DEBUG:app:*
 const mongoose = require('mongoose');
 
-mongoose.connect('mongodb://armikael:nanabanana12@ds159121.mlab.com:59121/courses', { useNewUrlParser: true })
+mongoose.connect(privateConfig.mdbCoursesConnectionString, { useNewUrlParser: true })
     .then(() => console.log('Connected to MongoDB.'))
     .catch((err) => console.log('Could not connect to MongoDB.'));
 

@@ -1,8 +1,9 @@
+const { privateConfig } = require('../config/private-config');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const urlencodedParser = bodyParser.urlencoded({ extended: false });
 
-mongoose.connect('mongodb://armikael:nanabanana12@ds211588.mlab.com:11588/tododb');
+mongoose.connect(privateConfig.mdbTodoConnectionString, { useNewUrlParser: true });
 
 const ContactSchema = new mongoose.Schema({
     name: String,
