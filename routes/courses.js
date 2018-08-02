@@ -1,6 +1,8 @@
 const express = require('express');
 const Joi = require('joi');
 const router = express.Router();
+const { Course } = require('../models/course.model');
+
 
 const courses = [
     {
@@ -16,7 +18,12 @@ const courses = [
 
 // Get all courses
 router.get('/', (req, res) => {
-    res.status(200).send(courses);
+    async function getAllCourses() {
+        const courses = await Course.find({});
+        res.status(200).send(courses);
+    }
+
+    getAllCourses();
 });
 
 // Get specific course
