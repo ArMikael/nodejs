@@ -1,3 +1,7 @@
+:root {
+    --mainBgColor: lightslategray;
+}
+
 body {
     background-color: #003366;
 }
@@ -14,6 +18,7 @@ ul {
 
 .main-title {
     padding: 12px;
+    background-color: var(--mainBgColor);
 }
 
 
