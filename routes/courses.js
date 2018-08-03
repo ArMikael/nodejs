@@ -19,19 +19,16 @@ router.get('/:id', async (req, res) => {
 });
 
 // Adding new course
-router.post('/', (req, res) => {
-    const result = validateCourse(req.body);
+router.post('/', async (req, res) => {
+    const validationResult = await validateCourse(req.body);
 
     // Bad request 400
-    if (result.error) return res.status(400).send(result.error.details[0].message);
+    if (validationResult.error) return res.status(400).send(validationResult.error.details[0].message);
 
-    const course = {
-        id: courses.length + 1,
-        name: req.body.name
-    };
+    const course = req.body;
 
-    courses.push(course);
-    res.send(course);
+    let addedCourse = await Course(course).save();
+    res.send(addedCourse);
 });
 
 
@@ -66,7 +63,10 @@ router.delete('/:id', (req, res) => {
 function validateCourse(course) {
     const schema = {
         id: Joi.number(),
-        name: Joi.string().min(3).required()
+        name: Joi.string().min(3).required(),
+        price: Joi.number(),
+        tags: Joi.array(),  
+        isPublished: Joi.boolean()
     };
 
     return Joi.validate(course, schema);
