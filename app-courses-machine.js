@@ -13,7 +13,7 @@ mongoose.connect(privateConfig.mdbCoursesConnectionString, { useNewUrlParser: tr
     .catch((err) => console.log('Could not connect to MongoDB.'));
 
 
-const courses = require('./routes/courses');
+const courses = require('./routes/courses.router');
 
 debug('All dependencies loaded!');
 

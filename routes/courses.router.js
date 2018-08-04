@@ -21,13 +21,13 @@ router.get('/:id', async (req, res) => {
 // Adding new course
 router.post('/', async (req, res) => {
     const validationResult = await validateCourse(req.body);
+    console.log('validation finished...');
 
     // Bad request 400
     if (validationResult.error) return res.status(400).send(validationResult.error.details[0].message);
 
-    const course = req.body;
-
-    let addedCourse = await Course(course).save();
+    let addedCourse = new Course(req.body);
+    await addedCourse.save();
     res.send(addedCourse);
 });
 
@@ -65,8 +65,8 @@ function validateCourse(course) {
         id: Joi.number(),
         name: Joi.string().min(3).required(),
         price: Joi.number(),
-        tags: Joi.array(),  
-        isPublished: Joi.boolean()
+        tags: Joi.array(),
+        isPublished: Joi.boolean().required()
     };
 
     return Joi.validate(course, schema);
