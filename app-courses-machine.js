@@ -65,7 +65,7 @@ async function createCourse() {
     }
 }
 
-createCourse();
+// createCourse();
 
 async function getCourses() {
     const courses = await Course

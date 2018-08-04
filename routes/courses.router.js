@@ -21,7 +21,6 @@ router.get('/:id', async (req, res) => {
 // Adding new course
 router.post('/', async (req, res) => {
     const validationResult = await validateCourse(req.body);
-    console.log('validation finished...');
 
     // Bad request 400
     if (validationResult.error) return res.status(400).send(validationResult.error.details[0].message);
@@ -33,8 +32,9 @@ router.post('/', async (req, res) => {
 
 
 // Updating an existing course
-router.put('/:id', (req, res) => {
-    let course = courses.find(crs => crs.id === parseInt(req.params.id));
+router.put('/:id', async (req, res) => {
+    const course = await Course.findById(req.params.id);
+
     if (!course) return res.status(404).send('The course with the given name was not found.');
 
     const { error } = validateCourse(req.body);
@@ -42,9 +42,18 @@ router.put('/:id', (req, res) => {
         return res.status(400).send(error.details[0].message);
     }
 
-    course.name = req.body.name;
+    course.set(req.body).save();
 
     res.send(course);
+
+    // const result = await Course.update({ _id: req.params.id }, {
+    //     $set: {
+    //         author: 'New Author',
+    //         isPublished: true
+    //     }
+    // });
+    //
+    // console.log(result);
 });
 
 // Remove course
@@ -64,7 +73,7 @@ function validateCourse(course) {
     const schema = {
         id: Joi.number(),
         name: Joi.string().min(3).required(),
-        price: Joi.number(),
+        price: Joi.number().required(),
         tags: Joi.array(),
         isPublished: Joi.boolean().required()
     };
