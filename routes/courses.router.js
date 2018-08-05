@@ -20,14 +20,20 @@ router.get('/:id', async (req, res) => {
 
 // Adding new course
 router.post('/', async (req, res) => {
-    const validationResult = await validateCourse(req.body);
+    try {
+        const validationResult = await validateCourse(req.body);
 
-    // Bad request 400
-    if (validationResult.error) return res.status(400).send(validationResult.error.details[0].message);
+        // Bad request 400
+        if (validationResult.error) return res.status(400).send(validationResult.error.details[0].message);
 
-    let addedCourse = new Course(req.body);
-    await addedCourse.save();
-    res.send(addedCourse);
+        let addedCourse = new Course(req.body);
+        await addedCourse.save();
+        res.send(addedCourse);
+    }
+    catch (ex) {
+        console.log(ex.message);
+        res.send(ex.message);
+    }
 });
 
 
