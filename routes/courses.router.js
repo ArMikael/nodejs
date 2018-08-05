@@ -63,12 +63,9 @@ router.put('/:id', async (req, res) => {
 });
 
 // Remove course
-router.delete('/:id', (req, res) => {
-    const course = courses.find(crs => crs.id === parseInt(req.params.id));
+router.delete('/:id', async (req, res) => {
+    const course = await Course.findByIdAndRemove(req.params.id);
     if (!course) return res.status(404).send('Course with the given id was not found.');
-
-    const index = courses.indexOf(course);
-    courses.splice(index, 1);
 
     res.send(course);
 });
