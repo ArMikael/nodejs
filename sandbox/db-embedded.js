@@ -32,17 +32,22 @@ async function createCourse(name, author) {
     console.log(result);
 }
 
-//createCourse('NodeJS for Beginners', '5b6a0032f0d9c605e02bdb56');
+let author = {
+    name: 'Harry Lordy',
+    bio: 'Book hero',
+    website: 'www.hero.book'
+};
+
+createCourse('Writing books for beginners', author);
 
 async function listCourses() {
     const courses = await Course
         .find()
-        .populate('author', 'name bio')
         .select('name author');
 
     console.log(courses);
 }
 
-// listCourses();
+listCourses();
 
 // updateAuthor();
