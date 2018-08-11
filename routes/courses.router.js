@@ -1,5 +1,7 @@
 const express = require('express');
 const Joi = require('joi');
+Joi.objectId = require('joi-objectid')(Joi);
+
 const router = express.Router();
 const { Course } = require('../models/course.model');
 
@@ -74,7 +76,7 @@ router.delete('/:id', async (req, res) => {
 // Validation by using Joi before sending it to db
 function validateCourse(course) {
     const schema = {
-        id: Joi.number(),
+        id: Joi.objectId(),
         name: Joi.string().min(3).required(),
         price: Joi.number().required(),
         tags: Joi.array(),
