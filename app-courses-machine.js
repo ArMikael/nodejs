@@ -7,6 +7,7 @@ const debug = require('debug')('app:courses'); // Set in terminal "export DEBUG=
 const configDebug = require('debug')('app:config'); // Run all debuggers -> export DEBUG:app:*
 const mongoose = require('mongoose');
 const { Course } = require('./models/course.model');
+const { User } = require('./models/user.model');
 
 mongoose.connect(privateConfig.mdbCoursesConnectionString, { useNewUrlParser: true })
     .then(() => console.log('Connected to MongoDB.'))
@@ -40,6 +41,24 @@ app.get('/', (req, res) => {
     // res.status(200).render('index', { title: 'Course Machine App', mainTitle: 'Course Machine' });
     res.status(200).send('Welcome to the Courses Machine!');
 });
+
+app.post('/users', async (req, res) => {
+    try {
+        let validUser = await validateUser(req.body);
+
+        if (!validUser.error) return res.status(400).send('Wrong user parameters: ', validUser.error.details[0].message);
+
+        let user = new User(req.body);
+        await user.save();
+
+        res.send(validUser);
+    }
+    catch (ex) {
+        console.log(ex.message);
+        res.send(ex.message);
+    }
+});
+
 
 async function createCourse() {
     const course = new Course({
