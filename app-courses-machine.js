@@ -15,6 +15,7 @@ mongoose.connect(privateConfig.mdbCoursesConnectionString, { useNewUrlParser: tr
 
 const courses = require('./routes/courses.router');
 const users = require('./routes/users.router');
+const logins = require('./routes/logins.router');
 
 debug('All dependencies loaded!');
 
@@ -28,6 +29,7 @@ app.use(express.static('public'));
 app.use(helmet());
 app.use('/courses', courses);
 app.use('/users', users);
+app.use('/login', logins);
 
 configDebug('App Name: ', config.get('name'));
 configDebug('Mail Server: ', config.get('mail.host'));
