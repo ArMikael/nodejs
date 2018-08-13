@@ -7,10 +7,12 @@ const { User } = require('../models/user.model');
 router.post('/', async (req, res) => {
     try {
         let { error } = await validateUser(req.body);
+        if (error) return res.status(400).send('Wrong user parameters: ', error.details[0].message);
 
-        if ( error ) return res.status(400).send('Wrong user parameters: ', error.details[0].message);
+        let user = await User.findOne({ email: req.body.email });
+        if (user) return res.status(400).send('User already registered.');
 
-        let user = new User(req.body);
+        user = new User(req.body);
         await user.save();
 
         res.send(user);
