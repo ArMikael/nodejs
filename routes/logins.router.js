@@ -6,11 +6,12 @@ const { User } = require('../models/user.model');
 
 
 router.post('/', async (req, res) => {
-    const login = await validateLogin(req.body);
-});
+    const user = await User.find({ email: req.body.email });
+    console.log(user);
 
-function validateLogin() {
-    return true;
-}
+    if (!user) return res.status('404').send('User with such email doesn\'t exist.');
+
+    res.status(200).send(user);
+});
 
 module.exports = router;
