@@ -6,14 +6,14 @@ const { User } = require('../models/user.model');
 
 router.post('/', async (req, res) => {
     try {
-        let validUser = await validateUser(req.body);
+        let { error } = await validateUser(req.body);
 
-        if (!validUser.error) return res.status(400).send('Wrong user parameters: ', validUser.error.details[0].message);
+        if ( error ) return res.status(400).send('Wrong user parameters: ', error.details[0].message);
 
         let user = new User(req.body);
         await user.save();
 
-        res.send(validUser);
+        res.send(user);
     }
     catch (ex) {
         console.log(ex.message);
