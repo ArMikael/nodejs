@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const courseSchema = mongoose.Schema({
+const courseSchema = new mongoose.Schema({
     name: {
         type: String,
         // All following are mongoose validators and doesn't exist in vanilla mongoDB
