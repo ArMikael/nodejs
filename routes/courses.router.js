@@ -3,6 +3,8 @@ const Joi = require('joi');
 Joi.objectId = require('joi-objectid')(Joi);
 
 const router = express.Router();
+const auth = require('../middleware/auth.middleware');
+
 const { Course } = require('../models/course.model');
 
 
@@ -21,7 +23,7 @@ router.get('/:id', async (req, res) => {
 });
 
 // Adding new course
-router.post('/', async (req, res) => {
+router.post('/', auth, async (req, res) => {
     try {
         const validationResult = await validateCourse(req.body);
 
