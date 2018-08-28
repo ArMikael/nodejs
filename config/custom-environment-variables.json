@@ -1,5 +1,4 @@
 {
-  "mail": {
-    "password": "APP_PASS"
-  }
+  "mongoCoursesConnectionString": "APP_MONGODB_COURSES",
+  "secretKey": "APP_SECRET_KEY"
 }
