@@ -42,7 +42,7 @@ router.post('/', auth, async (req, res) => {
 
 
 // Updating an existing course
-router.put('/:id', async (req, res) => {
+router.put('/:id', auth, async (req, res) => {
     const course = await Course.findById(req.params.id);
 
     if (!course) return res.status(404).send('The course with the given name was not found.');
@@ -67,7 +67,7 @@ router.put('/:id', async (req, res) => {
 });
 
 // Remove course
-router.delete('/:id', async (req, res) => {
+router.delete('/:id', auth, async (req, res) => {
     const course = await Course.findByIdAndRemove(req.params.id);
     if (!course) return res.status(404).send('Course with the given id was not found.');
 
