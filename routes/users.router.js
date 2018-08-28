@@ -5,7 +5,13 @@ const _ = require('lodash');
 const bcrypt = require('bcrypt');
 
 const { User } = require('../models/user.model');
+const auth = require('../middleware/auth.middleware');
 
+
+router.get('/me', auth, async (req, res) => {
+    const user = await User.findById(req.user._id).select('-password'); // What properties to exclude
+    res.send(user);
+});
 
 router.post('/', async (req, res) => {
     try {
